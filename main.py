@@ -29,7 +29,8 @@ if args.debug:
     # detect the current working directory and print it
     path = os.getcwd()
     os.makedirs(path+"/Debug/Numbers",exist_ok=True)
-
+    os.makedirs(path+"/Debug/network_feed",exist_ok=True)
+    os.makedirs(path+"/Debug/processing",exist_ok=True)
 
 start = time.time()
 
@@ -47,7 +48,7 @@ else:
 image_copy=image_input.copy()
 
 #Image Processing
-Processed_image_dialated,Processed_image=image_procesor(image_input)
+_,Processed_image_dialated,Processed_image=image_procesor(image_input)
 
 if args.debug:
     cv2.imwrite(path+"Debug/Input.png",image_copy)
@@ -99,7 +100,7 @@ if args.debug:
     cv2.imwrite(path+"/Debug/solved_sudoku.png",solved_sudoku_image)    
 
 
-cv2.imshow("Solved Sudoku", solved_sudoku_image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()    
+#cv2.imshow("Solved Sudoku", solved_sudoku_image)
+#cv2.waitKey(0)
+#cv2.destroyAllWindows()    
 #print("time = ",end-start)

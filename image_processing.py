@@ -6,14 +6,14 @@ import operator
 def image_procesor(image):
     #processing_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY )
     image_copy=image.copy()
-    processing_image_dilated=cv2.GaussianBlur(image,(9,9),0)
-    processing_image_dilated=cv2.adaptiveThreshold(processing_image_dilated,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)
+    processing_image=cv2.GaussianBlur(image,(9,9),0)
+    processing_image=cv2.adaptiveThreshold(processing_image,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)
 
-    processing_image_dilated=cv2.bitwise_not(processing_image_dilated,processing_image_dilated)
+    processing_image=cv2.bitwise_not(processing_image,processing_image)
     kernel = np.array([[0., 1., 0.], [1., 1., 1.], [0., 1., 0.]],np.uint8)
-    processing_image_dilated = cv2.dilate(processing_image_dilated, kernel)
+    processing_image_dilated = cv2.dilate(processing_image, kernel)
 
-    return processing_image_dilated,image_copy
+    return processing_image,processing_image_dilated,image_copy
 
 def sudoku_finder(processing_image_dilated,processing_image):
     contours,_ = cv2.findContours(processing_image_dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -71,7 +71,7 @@ def remove_boundaries(img,floodfill_count=2):
     # Get image shape
     h, w = img.shape
     image_shrunk = cv2.resize(img, (50, 50),interpolation = cv2.INTER_AREA)
-    image_shrunk, img_original =image_procesor(image_shrunk)
+    image_shrunk,_, img_original =image_procesor(image_shrunk)
     image_copy=image_shrunk.copy()
     
     rows=image_shrunk.shape[0]
@@ -97,10 +97,10 @@ def remove_boundaries(img,floodfill_count=2):
     contours = sorted(contours, key=cv2.contourArea, reverse=True)
 
     if len(contours)==0:
-        return np.ones([h,w])*255
+        return np.ones([50,50])*255
     x,y,w,h = cv2.boundingRect(contours[0])
     if w*h<0.05*50*50:
-        return np.ones([h,w])*255
+        return np.ones([50,50])*255
     
     img_original=img_original[y-1:y+h+1,x-1:x+w+1]
    

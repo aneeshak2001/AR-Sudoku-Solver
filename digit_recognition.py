@@ -16,8 +16,11 @@ def image_to_digits(grid,model,args):
                 grid_numbers[i][j]=0
                 continue
 
+            #if args.debug:
+                #cv2.imwrite(path+"/Debug/network_feed/grid_"+str(i)+str(j)+".png",image)
+
             image = cv2.resize(image, (28, 28),interpolation = cv2.INTER_AREA)
-            image,_=image_procesor(image)
+            image,_,_=image_procesor(image)
 
             if args.debug:
                 cv2.imwrite(path+"/Debug/network_feed/grid_"+str(i)+str(j)+".png",image)
