@@ -100,7 +100,7 @@ if args.debug:
     cv2.imwrite(path+"/Debug/solved_sudoku.png",solved_sudoku_image)    
 
 
-#cv2.imshow("Solved Sudoku", solved_sudoku_image)
-#cv2.waitKey(0)
-#cv2.destroyAllWindows()    
+cv2.imshow("Solved Sudoku", solved_sudoku_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()    
 #print("time = ",end-start)
